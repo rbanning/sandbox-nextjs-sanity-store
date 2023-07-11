@@ -1,12 +1,15 @@
-"use client";
-//next js 13 wants to render everything on server but this is an app
+import type { Metadata } from "next";
+import { metadata as studioMetadata } from 'next-sanity/studio/metadata';
 
+import { Studio } from "./studio";
 
-import { NextStudio } from 'next-sanity/studio';
-import { sanityConfig } from '@/lib';
+export const metadata: Metadata = {
+  ...studioMetadata,
+  viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`, //override
+}
 
 export default function AdminPage() {
   return (
-    <NextStudio config={sanityConfig} />
+    <Studio />
   )
 }
