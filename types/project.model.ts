@@ -2,7 +2,7 @@ import { _DocumentBaseModel } from "./_document-base-model";
 import { _SanityContentBlockModel } from "./_sanity-content-block-model";
 import { _SanityImageModel } from "./_sanity_image-model";
 
-export interface ProjectModel extends _DocumentBaseModel {
+export interface ProjectPropModel {
   name: string;
   slug: string;
   publishedAt: Date;
@@ -11,6 +11,8 @@ export interface ProjectModel extends _DocumentBaseModel {
   content: _SanityContentBlockModel;
 }
 
+export type ProjectModel = _DocumentBaseModel & ProjectPropModel;
+
 //-- name:  ProjectListItemDTO
 //-- desc:  Used for listing projects.  Very bare-bones set of properties
 export type ProjectListItemDTO = Pick<ProjectModel, 'name' | 'slug' | 'publishedAt'>;
@@ -18,5 +20,5 @@ export type ProjectListItemDTO = Pick<ProjectModel, 'name' | 'slug' | 'published
 //--  name: ProjectDetailDTO
 //--  desc: Used to display a Project
 //--        All of the _DocumentBaseModel props are optional and may not be present
-export type ProjectDetailDTO = Exclude<ProjectModel, _DocumentBaseModel> & Partial<_DocumentBaseModel>;
+export type ProjectDetailDTO = ProjectPropModel & Partial<_DocumentBaseModel>;
 

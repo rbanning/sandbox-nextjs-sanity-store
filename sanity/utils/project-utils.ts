@@ -51,7 +51,7 @@ export async function getProject(slug: string): Promise<ProjectDetailDTO> {
     [0]
     {
       ${baseProjectFields},
-      "image", image.asset->url,
+      "image": image.asset->url,
       url,
       content
     }`,
@@ -59,4 +59,5 @@ export async function getProject(slug: string): Promise<ProjectDetailDTO> {
   );
   
   return postQueryMapper(result);
+
 }
