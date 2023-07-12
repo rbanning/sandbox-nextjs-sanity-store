@@ -1,7 +1,7 @@
 "use client";
 
 import { NextStudio } from "next-sanity/studio";
-import { sanityConfig } from "@/lib";
+import { sanityConfig } from "@/sanity/utils/config/sanity-config";
 
 export function Studio() {
   return <NextStudio config={sanityConfig} />

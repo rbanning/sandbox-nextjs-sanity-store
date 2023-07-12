@@ -17,6 +17,11 @@ const project = {
       }
     },
     {
+      name: 'publishedAt',
+      title: 'Published At',
+      type: 'date'
+    },
+    {
       name: 'image',
       title: 'Image',
       type: 'image',
