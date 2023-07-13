@@ -1,3 +1,4 @@
+import { Providers } from '@/store/providers';
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -25,8 +26,9 @@ export default function RootLayout({
       <body 
         suppressHydrationWarning={suppress_extra_attributes_warning}
         className={`${inter.className} min-h-screen`}>
-          
-          {children}
+          <Providers>
+            {children}
+          </Providers>
       </body>
     </html>
   )
