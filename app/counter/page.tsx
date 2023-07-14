@@ -1,14 +1,7 @@
 'use client';
 
-import { useSelector, useDispatch } from 'react-redux';
-import type { TypedUseSelectorHook } from "react-redux";
-
-import { RootState, AppDispatch } from '@/store';
+import { RootState, useAppDispatch, useAppSelector } from '@/store';
 import { increment, decrement, change } from '@/store/features/counter/counter-slice';
-
-//type the useDispatch and useSelector methods
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 
 export function CounterPage() {
