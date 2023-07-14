@@ -1,10 +1,11 @@
+import SSRHarryPotterTable from "@/components/ssr-harry-potter-table";
 import { IHarryPotterName } from "@/data/harry-potter.models";
 
 import { store } from '@/store';
 import { setStartupNames } from "@/store/features/harry-potter/harry-potter-searchSlice";
 
-import HarryPotterSearchInput from "@/components/harry-potter-search-input";
-import HarryPotterPreloader from "@/components/harry-potter-preloader";
+import { normalize } from "@/data/utils";
+import Link from "next/link";
 
 const URL = {  
   names: 'http://localhost:4200/api/harry-potter/names?count=1000',
@@ -16,9 +17,8 @@ export default async function HarrySearch() {
   store.dispatch(setStartupNames(names));
 
   return (
-    <main className="max-w-md mx-auto my-8">
-      <HarryPotterPreloader names={names} />  {/* move the names over to the client side  */}
-      <HarryPotterSearchInput />
+    <main className="max-w-md mx-auto">
+      <SSRHarryPotterTable />
     </main>
   )
 }

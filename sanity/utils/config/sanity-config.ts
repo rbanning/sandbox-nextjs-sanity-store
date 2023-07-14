@@ -4,6 +4,7 @@ import { defineConfig } from 'sanity';
 
 
 import schemaTypes from '@/sanity/schema';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { configBase } from './config-base';
 
 export const sanityConfig = defineConfig({
@@ -12,7 +13,7 @@ export const sanityConfig = defineConfig({
   title: 'Sandbox Store Studio',
   basePath: '/admin-studio',
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool(), visionTool(), unsplashImageAsset()],
 
   schema: { types: schemaTypes }
-})
+});

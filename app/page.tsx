@@ -1,32 +1,20 @@
-import Link from 'next/link';
-import Image from 'next/image';
-
-import { getProjects } from '@/sanity/utils/project-utils';
-import { dateFormatting, enUS } from '@/sanity/utils/date-helpers';
+import { getProducts } from '@/sanity/utils/product-utils';
+import ProductCard from '@/components/product-card';
 
 export default async function Home() {
   //NOTE: in v13, we can get the projects here
-  const projects = await getProjects();
+  const products = await getProducts();
 
   return (
-    <main className="flex flex-col items-center justify-between p-24">
-
-      <div className="w-full max-w-xl items-center justify-between font-mono md:flex">
-        <div className="relative mr-8 w-20 pb-[20%]">
-          <Image src="/sandbox.svg" alt="sandbox logo" fill={true} className="object-contain"></Image>
-        </div>
-        <h1 className="text-3xl drop-shadow-lg">Sandbox Store</h1>
-        <div className="text-xl font-light">Everything you need for your next sand adventure!</div>
-      </div>
-
-      <div className="my-8 w-full max-w-xl flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-semibold pb-1 border-b-2 border-b-fuchsia-500">Projects</h2>
-        {projects.map((project) => (
-          <Link href={`/projects/${project.slug}`} key={project.slug} className="my-4 hover:scale-105 transition-transform">
-            <h3 className="text-xl">{project.name}</h3>
-            <div className="font-mono text-stone-500 text-center">{project.publishedAt.toLocaleDateString(enUS, dateFormatting.MMMddYYYY)}</div>
-          </Link>
+    <main className="max-w-6xl mx-auto bg-white/50 p-8 shadow-lg">
+      <h1 className="text-3xl font-light text-fuchsia-600 mb-8">The Sandbox Store</h1>
+      <div className="w-full grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+        {products.map(product => (
+          <div key={product.slug} className="round-sm shadow w-80 bg-slate-50 mb-4 transition-all hover:shadow-lg hover:bg-white">
+            <ProductCard product={product} />
+          </div>
         ))}
+        
       </div>
 
     </main>

@@ -1,12 +1,19 @@
 'use client';
 
 import { useSelector, useDispatch } from 'react-redux';
+import type { TypedUseSelectorHook } from "react-redux";
+
+import { RootState, AppDispatch } from '@/store';
 import { increment, decrement, change } from '@/store/features/counter/counter-slice';
-import { RootState } from '@/store';
+
+//type the useDispatch and useSelector methods
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 
 export function CounterPage() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  const count = useAppSelector((state: RootState) => state.counter.value);
+  const dispatch = useAppDispatch();
 
   return (
     <main className="mx-auto max-w-md my-8">
