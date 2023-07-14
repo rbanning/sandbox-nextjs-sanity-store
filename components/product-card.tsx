@@ -3,6 +3,8 @@ import { ProductListItemDTO } from "@/types/product.model";
 import Image from "next/image";
 import ProductAvailability from "./product-availability";
 import ProductFeatured from "./product-featured";
+import AddToCart from "./add-to-cart";
+import NotifyMeWhenAvailable from "./notify-me-when-available";
 
 
 
@@ -48,14 +50,12 @@ function ProductCard({product}: {product: ProductListItemDTO}) {
           &pound; {product.price}
         </div>
         
-        <div className="flex justify-center items-center mt-2">
-          <button className="border-2 border-slate-100 text-xl flex justify-center items-center py-2 px-4">-</button>
-          <span className="bg-slate-100 text-xl flex justify-center items-center py-2 px-4">1</span>          
-          <button className="border-2 border-slate-100 text-xl flex justify-center items-center py-2 px-4">+</button>
-        </div>
-        <button className="block w-full my-1 py-2 border-none bg-fuchsia-800 rounded text-lg text-white text-center">
-          Add to cart 🛒
-        </button>
+        {product.available && (
+          <AddToCart product={product} />
+        )}
+        {!product.available && (
+          <NotifyMeWhenAvailable product={product} />
+        )}
 
       </div>
     </div>

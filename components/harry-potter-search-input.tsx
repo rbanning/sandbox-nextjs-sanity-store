@@ -1,18 +1,12 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
-import type { TypedUseSelectorHook } from "react-redux";
-
-import { RootState, AppDispatch } from '@/store';
+import { useAppSelector, useAppDispatch } from '@/store';
 import { setSearch } from '@/store/features/harry-potter/harry-potter-searchSlice';
 import { harryPotterApi } from "@/store/features/harry-potter/harry-potter-api";
 
 import HarryPotterTable from "./harry-potter-table";
 import { IHarryPotterName } from "@/data/harry-potter.models";
 import { useEffect } from "react";
-
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function HarryPotterSearchInput() {
   const dispatch = useAppDispatch();

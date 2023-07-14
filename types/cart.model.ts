@@ -1,6 +1,6 @@
-import { ProductListItemDTO } from "./product.model";
+import { ProductBriefDTO } from "./product.model";
 
 export interface ICartItem {
-  product: ProductListItemDTO,
+  product: ProductBriefDTO,
   qty: number;
 }

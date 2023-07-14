@@ -9,7 +9,6 @@ const baseProductFields = `
     sku,
     name,
     "slug": slug.current,    
-    releaseDate,
     brief,
     price,
     available,
@@ -20,7 +19,8 @@ const baseProductFields = `
 const postQueryMapper = <T extends ProductDetailDTO | ProductListItemDTO>(x: T) => {
   return {
     ...x,
-    releaseDate: parseSanityDate(`${x.releaseDate}`)
+    // releaseDate is no longer in the DTO
+    // releaseDate: parseSanityDate(`${x.releaseDate}`)
   } as T;
 }
 

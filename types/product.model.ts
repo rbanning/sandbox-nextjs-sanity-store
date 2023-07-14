@@ -2,6 +2,7 @@ import { _DocumentBaseModel } from "./_document-base-model";
 import { _SanityContentBlockModel } from "./_sanity-content-block-model";
 import { _SanityImageModel } from "./_sanity_image-model";
 
+
 export interface ProductPropModel {
   sku: string;
   name: string;
@@ -21,8 +22,7 @@ export type ProductModel = _DocumentBaseModel & ProductPropModel;
 //-- desc:  Used for listing Products.  
 export type ProductListItemDTO = Pick<ProductModel, 
   'sku' | 'name' | 'slug' | 'brief' | 'price' | 
-  'available' | 'featured' |
-  'releaseDate' | 'image'>;
+  'available' | 'featured' | 'image'>;
 
 //--  name: ProductDetailDTO
 //--  desc: Used to display a Product
