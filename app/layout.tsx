@@ -2,6 +2,8 @@ import { Providers } from '@/store/providers';
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import PageHeader from '@/components/page-header';
+import PageFooter from '@/components/page-footer';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,7 +29,9 @@ export default function RootLayout({
         suppressHydrationWarning={suppress_extra_attributes_warning}
         className={`${inter.className} min-h-screen`}>
           <Providers>
+            <PageHeader />
             {children}
+            <PageFooter />
           </Providers>
       </body>
     </html>

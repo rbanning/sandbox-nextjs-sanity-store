@@ -9,6 +9,9 @@ import NotifyMeWhenAvailable from "./notify-me-when-available";
 
 
 function ProductCard({product}: {product: ProductListItemDTO}) {
+  const amount = (value: number, includeCurrency = true) => {
+    return `${includeCurrency ? '£' : ''}${(Math.round(value * 100) / 100).toFixed(2)}`
+  }
 
   return (
     <div className="relative w-80 h-full flex flex-col">
@@ -47,7 +50,7 @@ function ProductCard({product}: {product: ProductListItemDTO}) {
       <div className="p-4 pt-0 flex flex-col items-center">
 
         <div className="text-slate-900 text-lg text-center">
-          &pound; {product.price}
+          {amount(product.price)}
         </div>
         
         {product.available && (
