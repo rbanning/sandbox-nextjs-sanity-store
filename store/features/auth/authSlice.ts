@@ -43,7 +43,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (thunkAPI, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const result = await (new AuthService()).logout();
       (new StorageService()).removeItem(AUTH_KEY)
