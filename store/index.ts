@@ -7,14 +7,18 @@ import type { TypedUseSelectorHook } from "react-redux";
 import counterReducer from './features/counter/counter-slice';
 import harryPotterSearchSlice from "./features/harry-potter/harry-potter-searchSlice";
 import { harryPotterApi } from "./features/harry-potter/harry-potter-api";
-import { cartSlice } from './features/cart/cartSlice';
+import cartSliceReducer from './features/cart/cartSlice';
+import authSliceReducer from "./features/auth/authSlice";
+import messageSliceReducer from "./features/message/messageSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     harryPotterSearch: harryPotterSearchSlice,
     harryPotterApi: harryPotterApi.reducer,
-    cart: cartSlice.reducer,
+    message: messageSliceReducer,
+    cart: cartSliceReducer,
+    auth: authSliceReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(harryPotterApi.middleware);

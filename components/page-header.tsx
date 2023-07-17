@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CartSummary from "./cart-summary";
 import Image from "next/image";
+import AccountIcon from "./account-icon";
 
 function PageHeader() {
   return (
@@ -12,6 +13,7 @@ function PageHeader() {
           width={30}
           height={20} />
         <Link href="/" className="text-fuchsia-300 text-xl flex-1 text-center">The Sandbox Store</Link>
+        <AccountIcon />
         <Link href="/cart">
           <CartSummary />
         </Link>
