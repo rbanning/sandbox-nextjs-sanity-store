@@ -1,6 +1,5 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { AuthService, LoginArgs, StorageService } from '@/lib';
 import { UserDTO } from '@/types/user.model';
 import { AsyncActionStatus } from '@/types/async-action-status.type';
@@ -12,17 +11,21 @@ export interface AuthState {
   user: UserDTO | null;
   status: AsyncActionStatus;
   error?: string;
+  initialized?: boolean;
 }
 
-const isUserAuthenticated = (user: UserDTO | null) => !!user?.id;
+const isUserAuthenticated = (user: UserDTO | null) => typeof(user) !== undefined && typeof(user?.id) === 'string';
 
 const AUTH_KEY = 'auth';
-const user = (new StorageService()).getItem<UserDTO>(AUTH_KEY);
+
+//do not attempt to get user from local storage here...
+//use the `initialize()` action
 export const initialState: AuthState = {
-  isAuthenticated: isUserAuthenticated(user),
-  user,
+  isAuthenticated: false,
+  user: null,
   status: 'idle'
 };
+
 
 
 export const login = createAsyncThunk(
@@ -57,7 +60,25 @@ export const logout = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    initialize: (state) => {
+      if (!state.initialized) {
+        //prevent running on server
+        if (!StorageService.isStorageAvailable()) {
+          throw new Error("Auth - can only initialize on the client");
+        }
+        const user = (new StorageService()).getItem<UserDTO>(AUTH_KEY); 
+        state.user = user;
+        state.isAuthenticated = isUserAuthenticated(user);
+        state.initialized = true;
+      }
+    },
+    reset: (state) => {
+      state.error = undefined;
+      state.isAuthenticated = isUserAuthenticated(state.user);
+      state.status = 'idle';
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.status = 'working';
@@ -92,6 +113,8 @@ export const authSlice = createSlice({
     });
   }
 });
+
+export const { initialize, reset } = authSlice.actions;
 
 const authSliceReducer = authSlice.reducer;
 

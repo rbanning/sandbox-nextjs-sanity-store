@@ -4,8 +4,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import PageHeader from '@/components/page-header';
 import PageFooter from '@/components/page-footer';
+import Toastr from '@/components/toastr';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 //see https://stackoverflow.com/questions/75337953/what-causes-nextjs-warning-extra-attributes-from-the-server-data-new-gr-c-s-c
 const suppress_extra_attributes_warning = true;
@@ -32,6 +33,7 @@ export default function RootLayout({
             <PageHeader />
             {children}
             <PageFooter />
+            <Toastr />
           </Providers>
       </body>
     </html>

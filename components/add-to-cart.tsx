@@ -14,23 +14,23 @@ function AddToCart({product} : {product: ProductListItemDTO}) {
         <button 
           onClick={() => dispatch(decrement(product))}
           disabled={!qty}
-          className="border-2 border-slate-100 text-xl flex justify-center items-center py-2 px-4">-</button>
-        <span className="bg-slate-100 text-xl flex justify-center items-center py-2 px-4">{qty || 0}</span>          
+          className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4">-</button>
+        <span className="bg-slate-100 text-base flex justify-center items-center py-2 px-4">{qty || 0}</span>          
         <button
           onClick={() => dispatch(increment(product))} 
-          className="border-2 border-slate-100 text-xl flex justify-center items-center py-2 px-4">+</button>
+          className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4">+</button>
       </div>
       {!qty && (
       <button 
         onClick={() => dispatch(increment(product))}
-        className="block w-full my-1 py-2 px-4 border-none bg-fuchsia-800 rounded text-lg text-fuchsia-50 text-center">
+        className="block w-full my-1 py-2 px-4 border-none bg-fuchsia-800/70 hover:bg-fuchsia-800 transition-colors rounded text-sm text-fuchsia-50 text-center">
         Add to cart
       </button>
       )}
       {qty && (qty > 0) && (
       <button 
         onClick={() => dispatch(remove(product))}
-        className="block w-full my-1 py-2 px-4 border-none bg-rose-800 rounded text-lg text-rose-50 text-center">
+        className="block w-full my-1 py-2 px-4 border-none bg-rose-800/70 hover:bg-rose-800 transition-colors rounded text-sm text-rose-50 text-center">
         Remove from cart
       </button>
       )}

@@ -1,13 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { login, logout } from "@/store/features/auth/authSlice";
+import { login, reset } from "@/store/features/auth/authSlice";
+import { addMessage, clearMessageCategory } from "@/store/features/message/messageSlice";
+
 
 
 function AccountLogin() {
+  const [ init, setInit ] = useState(false);
   const { user, status, error, isAuthenticated } = useAppSelector((state) => state.auth);
+  const {messages} = useAppSelector((state) => state.message);
 
   const dispatch = useAppDispatch();
 
@@ -23,6 +28,21 @@ function AccountLogin() {
       dispatch(login(data));
     }
   }
+
+  useEffect(() => {
+    dispatch(clearMessageCategory('auth'));
+    if (!init) {
+      dispatch(reset());
+      setInit(true);
+    } else {
+      if (error) {
+        dispatch(addMessage({ category: 'auth', type: 'error', title: 'Login Error', text: error }));
+      } else if (isAuthenticated) {
+        dispatch(addMessage({ category: 'auth', type: 'success', title: 'Welcome', text: user?.name || 'User'}));
+      }
+    }
+
+  }, [error, isAuthenticated]);
 
   return (
     <>
@@ -71,6 +91,11 @@ function AccountLogin() {
               Cancel
           </Link>
         </div>
+        {messages.map(message => (
+          <div key={message.id} className="my-8">
+            <div>{message.title}</div>
+          </div>
+        ))}
       </form>    
     )}
     </>    

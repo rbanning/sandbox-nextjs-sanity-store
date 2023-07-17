@@ -1,15 +1,16 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+
+export const errorToString = (error: any) => {
+  return typeof(error) === 'string' ? error :
+        (typeof(error?.message) === 'string' 
+          ? error.message
+          : `${error}`
+        );
+}
 
 //--- helper for rejecting async thunk
 export type Reject = (value: string) => any; // lazy ...
 export const reject = (rejectWithValue: Reject, error: any) => {
-  return rejectWithValue(
-    typeof(error) === 'string' ? error :
-    (typeof(error?.message) === 'string' 
-      ? error.message
-      : `${error}`
-    )
-  );
+  return rejectWithValue(errorToString(error));
 };
 
 

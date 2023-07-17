@@ -21,8 +21,9 @@ function ProductCard({product}: {product: ProductListItemDTO}) {
             <Image 
               src={product.image} 
               alt="product image"
-              width={320}
-              height={192} />
+              width={384}
+              height={256}
+              />
           </div>
         )}
         <div className="z-10 flex justify-between items-center">

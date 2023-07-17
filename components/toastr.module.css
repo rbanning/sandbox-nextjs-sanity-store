@@ -1,0 +1,17 @@
+
+@keyframes AnimateIn {
+  from {
+    scale: 0;
+    opacity: 0;
+    transform: translateY(200%);
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: AnimateIn 1s ease-in-out forwards;
+}

@@ -7,15 +7,11 @@ export class StorageService {
     //need to do some checking...
     //StorageService is only for client
 
-    if (!('btoa' in window)) {
+    if (!StorageService.isStorageAvailable(type)) {
       throw new Error('Unable to initialize StorageService.  Service is only for the client - not server (NodeJs)');
     }
 
-    const key = `${type}Storage`;
-
-    if (!(key in window)) {
-      throw new Error(`Unable to initialize StorageService with type '${type}'. The store '${key}' was not found`);
-    }
+    const key = StorageService.buildStorageName(type);
     this._storage = (window as any)[key];
   }
 
@@ -69,4 +65,14 @@ export class StorageService {
     return atob(value);
   }
 
+  private static buildStorageName(type: StorageType) {
+    return `${type}Storage`;
+  }
+  static isStorageAvailable(type: StorageType = 'local') {
+    const key = StorageService.buildStorageName(type);
+
+    const safeWindow = typeof(window) === undefined ? {} : globalThis;
+
+    return (('btoa' in safeWindow) && (key in safeWindow)) ;
+  }
 }
