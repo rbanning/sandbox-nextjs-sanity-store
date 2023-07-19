@@ -5,6 +5,7 @@ import ProductAvailability from "./product-availability";
 import ProductFeatured from "./product-featured";
 import AddToCart from "./add-to-cart";
 import NotifyMeWhenAvailable from "./notify-me-when-available";
+import Link from "next/link";
 
 
 
@@ -17,14 +18,14 @@ function ProductCard({product}: {product: ProductListItemDTO}) {
     <div className="relative w-80 h-full flex flex-col">
       <div className="relative w-full h-48 flex flex-col justify-end p-4 overflow-hidden">
         {product.image && (
-          <div className="absolute opacity-95 top-0 left-0">
+          <Link href={`/products/${product.slug}`} className="absolute opacity-95 top-0 left-0">
             <Image 
               src={product.image} 
               alt="product image"
               width={384}
               height={256}
               />
-          </div>
+          </Link>
         )}
         <div className="z-10 flex justify-between items-center">
           <ProductAvailability available={product.available} />
@@ -45,6 +46,9 @@ function ProductCard({product}: {product: ProductListItemDTO}) {
         </h3>
         <div className="text-slate-600 font-light text-sm text-center">
           {product.brief}
+        </div>
+        <div className="text-center mt-2">
+          <Link href={`/products/${product.slug}`} className="text-fuchsia-600">Explore...</Link>
         </div>
       </div>
 

@@ -16,11 +16,11 @@ const baseProductFields = `
     "image": image.asset->url
   `;
 
-const postQueryMapper = <T extends ProductDetailDTO | ProductListItemDTO>(x: T) => {
+// releaseDate is not in the both DTOs so we pass it separately
+const postQueryMapper = <T extends ProductDetailDTO | ProductListItemDTO>(x: T, releaseDate?: string) => {  
   return {
     ...x,
-    // releaseDate is no longer in the DTO
-    // releaseDate: parseSanityDate(`${x.releaseDate}`)
+    releaseDate: releaseDate ? parseSanityDate(`${releaseDate}`) : undefined
   } as T;
 }
 
@@ -32,7 +32,7 @@ export async function getProducts(): Promise<ProductListItemDTO[]> {
     }`
   );
   
-  return result.map(postQueryMapper);
+  return result.map(m => postQueryMapper(m));
   
 }
 
@@ -47,23 +47,22 @@ export async function getLatestProducts(count: number): Promise<ProductListItemD
     }`
   );
   
-  return result.map(postQueryMapper);
+  return result.map(m => postQueryMapper(m));
 }
 
 export async function getProduct(slug: string): Promise<ProductDetailDTO> {
 
-  const result = await sanityClient.fetch<ProductDetailDTO>(
+  const result = await sanityClient.fetch(
     groq`*[${baseProductSelector()} && slug.current == $slug]
     [0]
     {
       ${baseProductFields},
-      "image": image.asset->url,
-      url,
+      releaseDate,
       content
     }`,
     {slug}
   );
   
-  return postQueryMapper(result);
+  return postQueryMapper(result, result.releaseDate);
 
 }
