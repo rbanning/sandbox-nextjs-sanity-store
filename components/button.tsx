@@ -7,6 +7,57 @@ export type Type = 'solid' | 'outline' | 'clear';
 export type Size = 'normal' | 'large' | 'small';
 export type Color = 'primary' | 'accent' | 'black' | 'white' | 'slate';
 
+type CssVariant = Record<Type, Record<Color, string>>;
+
+const cssVariants: CssVariant = {
+  solid: {
+    primary: 'text-fuchsia-50 bg-fuchsia-600',
+    accent: 'text-amber-100 bg-amber-600',
+    black: 'text-slate-50 bg-slate-900',
+    white: 'text-slate-900 bg-white',
+    slate: 'text-slate-50 bg-slate-600',
+  },
+  outline: {
+    primary: 'text-fuchsia-600 bg-transparent border-fuchsia-600',
+    accent: 'text-amber-700 bg-transparent border-amber-700',
+    black: 'text-slate-900 bg-transparent border-slate-900',
+    white: 'text-white bg-transparent border-white',
+    slate: 'text-slate-600 bg-transparent border-slate-600',
+  },
+  clear: {
+    primary: 'text-fuchsia-600 bg-transparent',
+    accent: 'text-amber-700 bg-transparent',
+    black: 'text-slate-900 bg-transparent',
+    white: 'text-white bg-transparent',
+    slate: 'text-slate-600 bg-transparent',
+  },
+}
+
+const cssVariantEffect: CssVariant = {
+  solid: {
+    primary: 'bg-fuchsia-50',
+    accent: 'bg-amber-100',
+    black: 'bg-slate-100',
+    white: 'bg-slate-100',
+    slate: 'bg-slate-50',
+  },
+  outline: {
+    primary: 'bg-fuchsia-600/50',
+    accent: 'bg-amber-700/50',
+    black: 'bg-slate-900/50',
+    white: 'bg-slate-50',
+    slate: 'bg-slate-600/50',
+  },
+  clear: {
+    primary: 'bg-fuchsia-600/50',
+    accent: 'bg-amber-700/50',
+    black: 'bg-slate-900/50',
+    white: 'bg-slate-50',
+    slate: 'bg-slate-600/50',
+  },
+}
+
+
 export interface ButtonProps {
   type?: Type;
   size?: Size;
@@ -26,6 +77,7 @@ export interface ButtonProps {
 
 function Button(props: ButtonProps) {
   const [css, setCss] = useState('');
+  const [cssEffect, setCssEffect] = useState('');
 
 
   const handleClick = (e: React.MouseEvent) => {
@@ -38,6 +90,7 @@ function Button(props: ButtonProps) {
 
   useEffect(() => {
     setCss(buildCss(props.type || (isLink(props) ? 'clear': 'solid'), props.color || 'primary', props.size || 'normal', props.disabled, props.className));
+    setCssEffect(buildCssEffect(props.type || (isLink(props) ? 'clear': 'solid'), props.color || 'primary', props.size || 'normal', props.disabled, props.className));
   }, [props])
 
 
@@ -49,6 +102,7 @@ function Button(props: ButtonProps) {
         className={css}
         onClick={(e) => handleClick(e)}>
         {props.children}
+        <span className={cssEffect}></span>
       </Link>
     )}
     {!isLink(props) && (
@@ -58,6 +112,7 @@ function Button(props: ButtonProps) {
         disabled={props.disabled === true}
         onClick={(e) => handleClick(e)}>
         {props.children}
+        <span className={cssEffect}></span>
       </button>
     )}
     </>
@@ -73,76 +128,25 @@ function isLink(props: ButtonProps) {
 
 function buildCss(type: Type, color: Color, size: Size, disabled?: boolean, additionalCss?: string) {
   return [
+    'group', //important for the hover effect
     'relative',
     'py-2 px-4',
-    getBorder(type, color),
-    bgColor(type, color),
-    textColor(type, color),
+    type === 'outline' ? 'border-2' : 'border-0',
+    'rounded',
+    cssVariants[type][color],
     disabled ? 'opacity-30' : '',
-    after(type, color),
-    hover(type, color),
     additionalCss || ''
   ].join(' ');
 }
-function textColor(type: Type, color: Color) {
-  return `text-${getColor(color, type === 'solid')}`;
-}
-function bgColor(type: Type, color: Color) {
-  return `bg-${getColor(type === 'solid' ? color : 'white')}`;
-}
-function after(type: Type, color: Color) {
+function buildCssEffect(type: Type, color: Color, size: Size, disabled?: boolean, additionalCss?: string) {
   return [
-    `after:rounded`,
-    `after:content=['']`,
-    `after:absolute`,
-    `after:top-0 after:left-0 after:bottom-0 after:right-0`,
-    `after:opacity-0`,
-    `after:bg-fuchsia-600`,
-    //`after:bg-${getColor(color, type === 'solid', true)}`,
-    
+    'absolute',
+    'top-0 bottom-0 right-0 left-0',
+    'rounded opacity-0',
+    cssVariantEffect[type][color],
+    'transition-opacity duration-300',
+    'group-hover:opacity-20',
+    'group-active:animate-expand'
   ].join(' ');
 }
-function hover(type: Type, color: Color) {
-  return `hover:after:animate-expand-bg`
-}
 
-function getColor(color: Color, inverse?: boolean, dark?: boolean) {
-  if (dark) {
-    switch (color) {
-      case 'primary':
-        return inverse ? 'fuchsia-300' : 'fuchsia-800';
-      case 'accent': 
-        return inverse ? 'amber-300' : 'amber-800';
-      case 'black':
-        return inverse ? 'slate-100' : 'slate-800';
-      case 'white':
-        return inverse ? 'slate-300' : 'slate-100';
-      default:
-        return inverse ? 'slate-200' : 'slate-800';
-    }
-  }
-  //else not - dark
-  switch (color) {
-    case 'primary':
-      return inverse ? 'fuchsia-50' : 'fuchsia-600';
-    case 'accent': 
-      return inverse ? 'amber-100' : 'amber-700';
-    case 'black':
-      return inverse ? 'white' : 'black';
-    case 'white':
-      return inverse ? 'black' : 'white';
-    default:
-      return inverse ? 'slate-50' : 'slate-600';
-  }
-}
-function getBorder(type: Type, color: Color) {
-  const generalStyle = 'outline-none focus:outline-none ring-none'
-  switch (type) {
-    case 'outline':
-      return `border-2 rounded border-${getColor(color)} ${generalStyle}`;
-    case 'solid':
-    case 'clear':
-    default:
-      return `border-0 rounded ${generalStyle}`;
-  }
-}

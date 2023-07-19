@@ -41,10 +41,25 @@ export default async function ProductDetailPage({ params }: Props) {
           <Button href="/" className="mx-4">Back Home</Button>
           <Button href="/" type="outline" className="mx-4">Back Home</Button>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center my-8">
           <Button href="/" color="accent" type="solid" className="mx-4">Back Home</Button>
           <Button href="/" color="accent" className="mx-4">Back Home</Button>
           <Button href="/" color="accent" type="outline" className="mx-4">Back Home</Button>
+        </div>
+        <div className="flex items-center my-8">
+          <Button href="/" color="black" type="solid" className="mx-4">Back Home</Button>
+          <Button href="/" color="black" className="mx-4">Back Home</Button>
+          <Button href="/" color="black" type="outline" className="mx-4">Back Home</Button>
+        </div>
+        <div className="flex items-center my-8 p-8 bg-slate-900">
+          <Button href="/" color="white" type="solid" className="mx-4">Back Home</Button>
+          <Button href="/" color="white" className="mx-4">Back Home</Button>
+          <Button href="/" color="white" type="outline" className="mx-4">Back Home</Button>
+        </div>
+        <div className="flex items-center my-8">
+          <Button href="/" color="slate" type="solid" className="mx-4">Back Home</Button>
+          <Button href="/" color="slate" className="mx-4">Back Home</Button>
+          <Button href="/" color="slate" type="outline" className="mx-4">Back Home</Button>
         </div>
       </div>
       <p>
