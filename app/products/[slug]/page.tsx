@@ -1,5 +1,7 @@
 import BlockContent from "@/components/block-content";
 import Button from "@/components/button";
+import ProductComments from "@/components/product-comments";
+import ProductDetail from "@/components/product-detail";
 import { dateFormatting, enUS } from "@/sanity/utils/date-helpers";
 import { getProduct } from "@/sanity/utils/product-utils";
 import Image from "next/image";
@@ -14,17 +16,10 @@ export default async function ProductDetailPage({ params }: Props) {
   const product = await getProduct(slug);
 
   return (
-    <main className="p-24 flex flex-col items-center">
+    <main className="p-8 flex flex-col items-center">
       {product && (
         <>
-        <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-        <div className="font-mono text-stone-500">{product.releaseDate.toLocaleDateString(enUS, dateFormatting.MMMddYYYY)}</div>
-        {product.image && (
-          <Image src={product.image} alt={product.name} width={350} height={275} />
-        )}
-        <div className="my-4">
-          <BlockContent content={product.content} />
-        </div>
+        <ProductDetail product={product} comments="read-create" />
         </>
       )}
       {!product && (

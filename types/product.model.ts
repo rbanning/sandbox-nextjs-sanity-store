@@ -1,6 +1,7 @@
 import { _DocumentBaseModel } from "./_document-base-model";
 import { _SanityContentBlockModel } from "./_sanity-content-block-model";
 import { _SanityImageModel } from "./_sanity_image-model";
+import { CommentDTO } from "./comment.model";
 
 
 export interface ProductPropModel {
@@ -27,5 +28,7 @@ export type ProductListItemDTO = Pick<ProductModel,
 //--  name: ProductDetailDTO
 //--  desc: Used to display a Product
 //--        All of the _DocumentBaseModel props are optional and may not be present
-export type ProductDetailDTO = ProductPropModel & Partial<_DocumentBaseModel>;
+export type ProductDetailDTO = ProductPropModel 
+  & Partial<_DocumentBaseModel>
+  & { comments?: CommentDTO[] };
 

@@ -10,12 +10,14 @@ export const dateFormatting: Record<string, Intl.DateTimeFormatOptions> = {
     day: 'numeric',
     month: 'short',
     year: 'numeric'
-  }
+  },
+  
 }
 
 
 //expect date to be in YYYY-MM-DD format
 export const parseSanityDate = (d: string) => {
+  if (d.includes('T')) { d = d.split('T')[0]; }
   const pattern = /\d{4}\-\d{2}\-\d{2}/;
   if (!d || !d.match(pattern)) {
     throw new Error('Could not parse date.  Invalid or missing date string');
