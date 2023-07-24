@@ -23,7 +23,8 @@ export type ProductModel = _DocumentBaseModel & ProductPropModel;
 //-- desc:  Used for listing Products.  
 export type ProductListItemDTO = Pick<ProductModel, 
   'sku' | 'name' | 'slug' | 'brief' | 'price' | 
-  'available' | 'featured' | 'image'>;
+  'available' | 'featured' | 'image'> 
+  & Partial<Pick<_DocumentBaseModel, '_id'>>;
 
 //--  name: ProductDetailDTO
 //--  desc: Used to display a Product

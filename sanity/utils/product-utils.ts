@@ -7,6 +7,7 @@ import { CommentDTO } from "@/types/comment.model";
 
 const baseProductSelector = (published: boolean = true) => `_type == "product" && ${published ? "releaseDate <= now()" : "true"}`;
 const baseProductFields = `
+    _id,
     sku,
     name,
     "slug": slug.current,    

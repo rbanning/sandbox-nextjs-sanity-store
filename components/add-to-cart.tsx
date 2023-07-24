@@ -5,22 +5,24 @@ import { productQtySelector, decrement, increment, remove } from "@/store/featur
 import { ProductListItemDTO } from "@/types/product.model";
 import Button from "./button";
 
-function AddToCart({product} : {product: ProductListItemDTO}) {
+function AddToCart({product, mini} : {product: ProductListItemDTO, mini?: boolean}) {
   const qty = useAppSelector((state) => productQtySelector(state, product.sku));
   const dispatch = useAppDispatch();
 
   return (
     <div className="w-full">
-      <div className="flex justify-center items-center mt-2 ">
-        <button 
-          onClick={() => dispatch(decrement(product))}
-          disabled={!qty}
-          className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4 hover:border-slate-200 hover:bg-slate-50 transition-colors active:bg-slate-100 active:text-slate-400">-</button>
-        <span className="bg-slate-100 border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4">{qty || 0}</span>          
-        <button
-          onClick={() => dispatch(increment(product))} 
-          className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4 hover:border-slate-200 hover:bg-slate-50 transition-colors active:bg-slate-100 active:text-slate-400">+</button>
-      </div>
+      {!mini && (
+        <div className="flex justify-center items-center mt-2 ">
+          <button 
+            onClick={() => dispatch(decrement(product))}
+            disabled={!qty}
+            className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4 hover:border-slate-200 hover:bg-slate-50 transition-colors active:bg-slate-100 active:text-slate-400">-</button>
+          <span className="bg-slate-100 border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4">{qty || 0}</span>          
+          <button
+            onClick={() => dispatch(increment(product))} 
+            className="border-2 border-slate-100 text-base flex justify-center items-center py-2 px-4 hover:border-slate-200 hover:bg-slate-50 transition-colors active:bg-slate-100 active:text-slate-400">+</button>
+        </div>
+      )}
       {!qty && (
       <Button        
         type="solid"

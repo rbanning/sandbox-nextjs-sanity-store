@@ -16,7 +16,7 @@ function ProductComments({comments}: ProductCommentsProps) {
       ))}
       {(!comments || comments.length === 0) && (
         <div>
-          No comments, yet.  Be the first one to review...
+          No comments, yet.
         </div>
       )}
     </div>

@@ -55,6 +55,18 @@ function ProductDetail({product, comments}: {product: ProductDetailDTO, comments
         <div className="text-slate-600 font-light text-xl my-4 py-4 border-y-2 border-y-fuchsia-800 text-center">
           {product.brief}
         </div>
+
+        {product.available && (
+          <div className="my-8">
+            <div className="flex items-center">
+              <span className="text-fuchsia-700 mx-2">Save {discount}%</span>
+              <span className="mx-1 line-through text-slate-500 italic text-sm">{amountBeforeDiscount(product.price)}</span>
+              <span className="mx-1 font-semibold text-slate-900 text-lg">{amount(product.price)}</span>
+            </div>
+            <AddToCart product={product} mini={true} />
+          </div>
+        )}
+
         <div className="my-4">
           <BlockContent content={product.content} />
         </div>
@@ -86,10 +98,10 @@ function ProductDetail({product, comments}: {product: ProductDetailDTO, comments
           <h2 className="text-2xl font-light">Comments</h2>
           <ProductComments comments={product.comments} />
 
-          {comments === 'read-create' && (
+          {comments === 'read-create' && product.available && (
             <div className="my-12 p-4 border-t-2 border-t-slate-400">
               <div className="text-xl mb-8">Would you like to write a comment?</div>
-              <ProductCommentForm />
+              <ProductCommentForm productId={product._id ?? ''} />
             </div>
           )}
         </div>
